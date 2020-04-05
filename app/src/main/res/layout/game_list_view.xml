@@ -10,7 +10,7 @@
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="5dp"
         android:orientation="horizontal"
-        android:background="@drawable/list_view_background">
+        android:background="@drawable/game_list_background">
 
         <ImageView
             android:id="@+id/imageView"

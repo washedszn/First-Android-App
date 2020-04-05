@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#303030"
     tools:context=".GameActivity"
     android:id="@+id/game_activity">
 
@@ -20,8 +21,11 @@
             <ImageView
                 android:id="@+id/gameImage"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/image_frame"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
                 tools:src="@tools:sample/avatars" />
 
             <LinearLayout
@@ -34,6 +38,7 @@
                     android:id="@+id/gameName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="#bfbfbf"
                     android:textSize="32sp"
                     android:text="@string/test"/>
 
@@ -41,12 +46,14 @@
                     android:id="@+id/gameVersion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="#bfbfbf"
                     android:text="@string/test"/>
 
                 <TextView
                     android:id="@+id/gameGenre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="#bfbfbf"
                     android:text="@string/test"/>
 
             </LinearLayout>
@@ -62,6 +69,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
+                android:textColor="#bfbfbf"
                 android:text="@string/ratings_amp_reviews"
                 android:textSize="24sp"/>
 
@@ -81,6 +89,7 @@
                         android:id="@+id/gameRating"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#bfbfbf"
                         android:layout_weight="3"
                         android:gravity="center"
                         android:textSize="64sp"
@@ -89,6 +98,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#bfbfbf"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/out_of_5"/>
@@ -105,30 +115,35 @@
                         android:id="@+id/star1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#bfbfbf"
                         android:layout_weight="1"
                         android:text="@string/test" />
                     <TextView
                         android:id="@+id/star2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#bfbfbf"
                         android:layout_weight="1"
                         android:text="@string/test" />
                     <TextView
                         android:id="@+id/star3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#bfbfbf"
                         android:layout_weight="1"
                         android:text="@string/test" />
                     <TextView
                         android:id="@+id/star4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#bfbfbf"
                         android:layout_weight="1"
                         android:text="@string/test" />
                     <TextView
                         android:id="@+id/star5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#bfbfbf"
                         android:layout_weight="1"
                         android:text="@string/test" />
 
@@ -147,7 +162,7 @@
                 android:id="@+id/addRatingBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
                 android:text="@string/add_rating"/>
 
@@ -155,16 +170,25 @@
                 android:id="@+id/addReviewBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
                 android:text="@string/write_review" />
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="#383838"/>
+
         <ListView
             android:id="@+id/reviewListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
 
     </LinearLayout>
 

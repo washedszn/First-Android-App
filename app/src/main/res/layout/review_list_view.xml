@@ -6,12 +6,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="5dp"
+        android:orientation="vertical"
+        android:background="@drawable/game_list_background" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="32dp"
+            android:layout_margin="2dp"
             android:orientation="horizontal"
             android:weightSum="6">
 
@@ -19,6 +22,7 @@
                 android:id="@+id/reviewTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textColor="#bfbfbf"
                 android:layout_weight="5"
                 android:text="@string/test"/>
 
@@ -26,14 +30,16 @@
                 android:id="@+id/reviewVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textColor="#bfbfbf"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:gravity="end"
                 android:text="@string/test"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="32dp"
+            android:layout_margin="2dp"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -41,6 +47,7 @@
                 android:id="@+id/reviewRating"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textColor="#bfbfbf"
                 android:layout_weight="1"
                 android:text="@string/test"/>
 
@@ -48,6 +55,7 @@
                 android:id="@+id/reviewName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textColor="#bfbfbf"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="@string/test"/>
@@ -57,6 +65,8 @@
             android:id="@+id/reviewMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:textColor="#bfbfbf"
             android:text="@string/test"/>
     </LinearLayout>
 
