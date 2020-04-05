@@ -41,7 +41,7 @@ public class Game implements Serializable {
 
     public List<Review> getReviews() { return this.reviews; }
 
-    public String getAverageRating() {
+    public double getAverageRating() {
         double sum = 0;
         double totalRatings = 0;
 
@@ -52,7 +52,8 @@ public class Game implements Serializable {
 
         DecimalFormat df = new DecimalFormat("#.#");
 
-        return df.format(sum / totalRatings) + "";
+        //return df.format(sum / totalRatings) + "";
+        return sum / totalRatings;
     }
 
     public String getHistogramRating(Integer rating) {

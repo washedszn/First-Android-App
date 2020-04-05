@@ -61,7 +61,7 @@ public class GameActivity extends AppCompatActivity {
         nameView.setText(game.getName());
         versionView.setText("Version: " + game.getVersion());
         genresView.setText(game.getGenres());
-        ratingView.setText(game.getAverageRating());
+        ratingView.setText(game.getAverageRating() + " ratings");
         star1View.setText(game.getHistogramRating(1));
         star2View.setText(game.getHistogramRating(2));
         star3View.setText(game.getHistogramRating(3));
