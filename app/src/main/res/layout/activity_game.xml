@@ -149,8 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="@string/add_rating"
-                android:onClick="addRating"/>
+                android:text="@string/add_rating"/>
 
             <Button
                 android:id="@+id/addReviewBtn"
@@ -158,8 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="@string/write_review"
-                android:onClick="addReview" />
+                android:text="@string/write_review" />
 
         </LinearLayout>
 
