@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">App</string>
+    <string name="ratings_amp_reviews"><![CDATA[Ratings & Reviews]]></string>
+    <string name="out_of_5">out of 5</string>
+    <string name="test">test</string>
+    <string name="write_review">Write Review</string>
+    <string name="add_rating">Add Rating</string>
+    <string name="_1_star">1 Star</string>
+    <string name="_2_star">2 Star</string>
+    <string name="_3_star">3 Star</string>
+    <string name="_4_star">4 Star</string>
+    <string name="_5_star">5 Star</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+</resources>
