@@ -23,6 +23,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.app.Model.Game;
+import com.example.app.Model.GameAdmin;
 import com.example.app.Model.Review;
 import com.example.app.View.RatingView;
 import com.squareup.picasso.Picasso;
@@ -40,8 +41,8 @@ public class GameActivity extends AppCompatActivity {
     private RatingView star1, star2, star3, star4, star5;
     private EditText addReviewName, addReviewTitle, addReviewRating, addReviewMessage;
 
+    private ReviewArrayAdapter adapter;
     private Integer newRating;
-
     private Game game;
 
     @Override
@@ -63,7 +64,9 @@ public class GameActivity extends AppCompatActivity {
         star5 = findViewById(R.id.star5);
 
         Intent intent =  getIntent();
-        game = (Game) intent.getExtras().getSerializable("game");
+        final int position = intent.getExtras().getInt("game");
+
+        game = GameAdmin.getGame(position);
 
         nameView.setText(game.getName());
         versionView.setText("Version: " + game.getVersion());
@@ -81,17 +84,29 @@ public class GameActivity extends AppCompatActivity {
         Picasso.get().load(game.getImageUrl()).into(imageView);
         imageView.setClipToOutline(true);
 
-        ReviewArrayAdapter adapter = new ReviewArrayAdapter(this, game.getReviews());
+        adapter = new ReviewArrayAdapter(this, game.getReviews());
 
         reviewListView.setAdapter(adapter);
 
         reviewListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    public void onItemClick(AdapterView<?> parent, View view, int reviewPosition, long id) {
                         Intent intent = new Intent(GameActivity.this, ReviewActivity.class);
-                        intent.putExtra("review", game.getReviews().get(position));
+                        intent.putExtra("review", reviewPosition);
+                        intent.putExtra("game", position);
                         startActivity(intent);
+                    }
+                }
+        );
+
+        reviewListView.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        game.deleteReview(position);
+                        adapter.notifyDataSetChanged();
+                        return true;
                     }
                 }
         );
@@ -139,10 +154,10 @@ public class GameActivity extends AppCompatActivity {
                         LayoutInflater layoutInflater = (LayoutInflater) GameActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View customView = layoutInflater.inflate(R.layout.add_review, null);
 
-                        addReviewName = findViewById(R.id.addReviewName);
-                        addReviewTitle = findViewById(R.id.addReviewTitle);
-                        addReviewRating = findViewById(R.id.addReviewRating);
-                        addReviewMessage = findViewById(R.id.addReviewMessage);
+                        addReviewName = customView.findViewById(R.id.addReviewName);
+                        addReviewTitle = customView.findViewById(R.id.addReviewTitle);
+                        addReviewRating = customView.findViewById(R.id.addReviewRating);
+                        addReviewMessage = customView.findViewById(R.id.addReviewMessage);
 
                         cancelReviewBtn = customView.findViewById(R.id.cancelReviewBtn);
                         submitReviewBtn = customView.findViewById(R.id.submitReviewBtn);
@@ -150,6 +165,8 @@ public class GameActivity extends AppCompatActivity {
                         popupWindow = new PopupWindow(customView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
                         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
+                        popupWindow.setFocusable(true);
+                        popupWindow.update();
 
                         submitReviewBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -159,17 +176,11 @@ public class GameActivity extends AppCompatActivity {
                                 Log.e("test", "fired");
 
                                 String name = addReviewName.getText().toString();
-//                                String title = addReviewTitle.getText().toString();
-//                                int rating = Integer.parseInt(addReviewRating.getText().toString());
-//                                String message = addReviewMessage.getText().toString();
-//
-                                Log.e("test", name);
-//                                Log.e("test", title);
-//                                Log.e("test", rating + "");
-//                                Log.e("test", message);
+                                String title = addReviewTitle.getText().toString();
+                                int rating = Integer.parseInt(addReviewRating.getText().toString());
+                                String message = addReviewMessage.getText().toString();
 
-
-                                //game.addReview(5, addReviewName.getText().toString(), addReviewMessage.getText().toString(), "1.8.0", addReviewTitle.getText().toString());
+                                game.addReview(rating, name, message, game.getVersion(), title);
                                 popupWindow.dismiss();
                             }
                         });
@@ -210,5 +221,13 @@ public class GameActivity extends AppCompatActivity {
                     newRating = 5;
                     break;
         }
+    }
+
+    @Override
+    protected void onResume()
+    {
+        // TODO Auto-generated method stub
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

@@ -11,33 +11,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView gameListView;
-    private List<Game> gameList;
-    private GameAdmin gameAdmin;
+    private GameArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //readJsonAsset();
-
         gameListView = findViewById(R.id.ListView);
 
-        gameAdmin = new GameAdmin(this);
+        GameAdmin.initGames(this);
 
-        gameList = gameAdmin.getGames();
-
-        GameArrayAdapter adapter = new GameArrayAdapter(this, gameList);
+        adapter = new GameArrayAdapter(this, GameAdmin.getGames());
 
         gameListView.setAdapter(adapter);
 
@@ -46,31 +37,29 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(MainActivity.this, GameActivity.class);
-                        intent.putExtra("game", gameList.get(position));
+                        intent.putExtra("game", position);
                         startActivity(intent);
                     }
         });
+
+        gameListView.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        GameAdmin.deleteGame(position);
+                        adapter.notifyDataSetChanged();
+                        return true;
+                    }
+                }
+        );
     }
 
-//    private void readJsonAsset() {
-//        try {
-//            InputStream is = this.getAssets().open("games.json");
-//
-//            int size = is.available();
-//            byte[] buffer = new byte[size];
-//            is.read(buffer);
-//            is.close();
-//
-//            String jsonString = new String(buffer, "UTF-8");
-//
-//            File file = new File(this.getFilesDir(),"game_data.json");
-//            FileWriter fileWriter = new FileWriter(file);
-//            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-//            bufferedWriter.write(jsonString);
-//            bufferedWriter.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    @Override
+    protected void onResume()
+    {
+        // TODO Auto-generated method stub
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 
 }

@@ -16,21 +16,15 @@ import java.util.ArrayList;
 
 public class GameAdmin {
 
-    private ArrayList<Game> games;
-    private Context context;
+    public static ArrayList<Game> games;
 
-    public GameAdmin(Context context) {
-        this.games = new ArrayList<>();
-        this.context = context;
-
-        Log.e("test", "fired");
-
-        initGames();
+    static {
+        games = new ArrayList<>();
     }
 
-    private String readJsonAsset() throws IOException {
+    public static String readJsonAsset(Context context) throws IOException {
         String jsonString;
-        InputStream is = this.context.getAssets().open("games.json");
+        InputStream is = context.getAssets().open("games.json");
 
         int size = is.available();
         byte[] buffer = new byte[size];
@@ -40,22 +34,9 @@ public class GameAdmin {
         jsonString = new String(buffer, "UTF-8");
 
         return jsonString;
-
-//        File file = new File(context.getFilesDir(),"game_data.json");
-//        FileReader fileReader = new FileReader(file);
-//        BufferedReader bufferedReader = new BufferedReader(fileReader);
-//        StringBuilder stringBuilder = new StringBuilder();
-//        String line = bufferedReader.readLine();
-//        while (line != null){
-//            stringBuilder.append(line).append("\n");
-//            line = bufferedReader.readLine();
-//        }
-//        bufferedReader.close();
-//
-//        return stringBuilder.toString();
     }
 
-    private ArrayList<Review> formatReviews(JSONArray reviewsArray) throws JSONException {
+    public static ArrayList<Review> formatReviews(JSONArray reviewsArray) throws JSONException {
         ArrayList<Review> reviews = new ArrayList<>();
 
         for (int x = 0; x < reviewsArray.length(); x++) {
@@ -73,7 +54,7 @@ public class GameAdmin {
         return reviews;
     }
 
-    private ArrayList<Integer> formatRatings(JSONArray ratingsArray) throws JSONException {
+    public static ArrayList<Integer> formatRatings(JSONArray ratingsArray) throws JSONException {
         ArrayList<Integer> formattedRatings = new ArrayList<>();
 
         for (int i = 0; i < ratingsArray.length(); i++) {
@@ -83,10 +64,10 @@ public class GameAdmin {
         return formattedRatings;
     }
 
-    private void initGames() {
+    public static void initGames(Context context) {
         try {
 
-            JSONArray gamesArray = new JSONArray(readJsonAsset());
+            JSONArray gamesArray = new JSONArray(readJsonAsset(context));
 
             for (int i = 0; i < gamesArray.length(); i++) {
                 JSONObject gameObject = gamesArray.getJSONObject(i);
@@ -102,12 +83,16 @@ public class GameAdmin {
 
                 ArrayList<Integer> ratings = formatRatings(ratingsArray);
 
-                this.games.add(new Game(name, version, genres, reviews, ratings, imageUrl));
+                games.add(new Game(name, version, genres, reviews, ratings, imageUrl));
             }
         } catch(JSONException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    public ArrayList<Game> getGames() { return this.games; }
+    public static void deleteGame(int position) { games.remove(position); }
+
+    public static ArrayList<Game> getGames() { return games; }
+
+    public static Game getGame(int position) { return games.get(position); }
 }

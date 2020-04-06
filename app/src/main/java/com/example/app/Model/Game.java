@@ -37,6 +37,8 @@ public class Game implements Serializable {
 
     public String getGenres() { return this.genres; }
 
+    public Review getReview(int i) { return this.reviews.get(i); }
+
     public String getReviewTotal() { return this.reviews.size() + " reviews"; }
 
     public List<Review> getReviews() { return this.reviews; }
@@ -64,6 +66,8 @@ public class Game implements Serializable {
     }
 
     public void setName(String name) { this.name = name; }
+
+    public void deleteReview(int i) { this.reviews.remove(i); }
 
     public void addReview(Integer rating, String name, String message, String version, String title) {
         Review newReview = new Review(rating, name, message, version, title);

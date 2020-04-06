@@ -45,7 +45,7 @@ public class ReviewArrayAdapter extends ArrayAdapter {
         titleView.setText(review.getTitle());
         versionView.setText(review.getVersion());
         nameView.setText(review.getName());
-        ratingView.setText(review.getRating());
+        ratingView.setText(review.getRating() + " star rating");
         messageView.setText(review.getMessage());
 
         return convertView;
