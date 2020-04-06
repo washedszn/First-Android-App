@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
 import com.example.app.Model.Review;
+import com.example.app.View.DrawRatingView;
+import com.example.app.View.StarView;
 import com.example.app.View.ManageReviewPopup;
 
 public class ReviewActivity extends AppCompatActivity {
@@ -23,6 +25,7 @@ public class ReviewActivity extends AppCompatActivity {
     private Review review;
     private PopupWindow popupWindow;
     private ConstraintLayout constraintLayout;
+    private DrawRatingView drawRatingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class ReviewActivity extends AppCompatActivity {
         TextView reviewName = findViewById(R.id.reviewName);
         TextView reviewMessage = findViewById(R.id.reviewMessage);
         Button editBtn = findViewById(R.id.editBtn);
+        drawRatingView = findViewById(R.id.drawRating);
 
         Intent intent = getIntent();
         int gamePosition = intent.getExtras().getInt("game");
@@ -41,6 +45,8 @@ public class ReviewActivity extends AppCompatActivity {
 
         game = GameAdmin.getGame(gamePosition);
         review = game.getReview(reviewPosition);
+
+        drawRatingView.setRating(review.getRating());
 
         reviewTitle.setText("Title: " + review.getTitle());
         reviewVersion.setText("Version: " + review.getVersion());
