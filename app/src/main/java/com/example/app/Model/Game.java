@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game implements Serializable {
@@ -40,6 +41,8 @@ public class Game implements Serializable {
     public Review getReview(int i) { return this.reviews.get(i); }
 
     public String getReviewTotal() { return this.reviews.size() + " reviews"; }
+
+    public List<Integer> getRatings() { return this.ratings; }
 
     public List<Review> getReviews() { return this.reviews; }
 

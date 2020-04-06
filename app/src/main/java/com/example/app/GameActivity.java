@@ -1,5 +1,6 @@
 package com.example.app;
 
+import androidx.annotation.ContentView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -9,7 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,6 +34,8 @@ import com.example.app.View.RatingView;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -41,9 +48,13 @@ public class GameActivity extends AppCompatActivity {
     private RatingView star1, star2, star3, star4, star5;
     private EditText addReviewName, addReviewTitle, addReviewRating, addReviewMessage;
 
+    private Button submitGameBtn, cancelGameBtn;
+    private EditText addGameName, addGameVersion, addGameGenre, addGameImageUrl;
+
     private ReviewArrayAdapter adapter;
     private Integer newRating;
     private Game game;
+    private int gamePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +75,9 @@ public class GameActivity extends AppCompatActivity {
         star5 = findViewById(R.id.star5);
 
         Intent intent =  getIntent();
-        final int position = intent.getExtras().getInt("game");
+        gamePosition = intent.getExtras().getInt("game");
 
-        game = GameAdmin.getGame(position);
+        game = GameAdmin.getGame(gamePosition);
 
         nameView.setText(game.getName());
         versionView.setText("Version: " + game.getVersion());
@@ -94,7 +105,7 @@ public class GameActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int reviewPosition, long id) {
                         Intent intent = new Intent(GameActivity.this, ReviewActivity.class);
                         intent.putExtra("review", reviewPosition);
-                        intent.putExtra("game", position);
+                        intent.putExtra("game", gamePosition);
                         startActivity(intent);
                     }
                 }
@@ -132,8 +143,7 @@ public class GameActivity extends AppCompatActivity {
                         submitRatingBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //game.addRating(newRating);
-                                game.setName("test");
+                                game.addRating(newRating);
                                 popupWindow.dismiss();
                             }
                         });
@@ -229,5 +239,69 @@ public class GameActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
         super.onResume();
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.right_menu, menu);
+
+        menu.findItem(R.id.menuTitle).setTitle("Edit Game");
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        LayoutInflater layoutInflater = (LayoutInflater) GameActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.add_game, null);
+
+        addGameName = customView.findViewById(R.id.addGameName);
+        addGameVersion = customView.findViewById(R.id.addGameVersion);
+        addGameGenre = customView.findViewById(R.id.addGameGenre);
+        addGameImageUrl = customView.findViewById(R.id.addGameImageUrl);
+
+        addGameName.setText(game.getName());
+        addGameVersion.setText(game.getVersion());
+        addGameGenre.setText(game.getGenres());
+        addGameImageUrl.setText(game.getImageUrl());
+
+        cancelGameBtn = customView.findViewById(R.id.cancelGameBtn);
+        submitGameBtn = customView.findViewById(R.id.submitGameBtn);
+
+        popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
+        popupWindow.setFocusable(true);
+        popupWindow.update();
+
+        submitGameBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                String name = addGameName.getText().toString();
+                String version =  addGameVersion.getText().toString();
+                String genre = addGameGenre.getText().toString();
+                String imageUrl = addGameImageUrl.getText().toString();
+                List<Integer> ratings = game.getRatings();
+                List<Review> reviews = game.getReviews();
+
+                GameAdmin.deleteGame(gamePosition);
+                GameAdmin.addGame(new Game(name, version, genre, reviews, ratings, imageUrl));
+                popupWindow.dismiss();
+            }
+        });
+
+        cancelGameBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        return super.onOptionsItemSelected(item);
     }
 }

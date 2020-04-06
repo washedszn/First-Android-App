@@ -90,6 +90,8 @@ public class GameAdmin {
         }
     }
 
+    public static void addGame(Game game) { games.add(game); }
+
     public static void deleteGame(int position) { games.remove(position); }
 
     public static ArrayList<Game> getGames() { return games; }
