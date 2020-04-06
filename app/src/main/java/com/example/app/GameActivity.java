@@ -16,12 +16,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.app.Model.Game;
 import com.example.app.Model.Review;
+import com.example.app.View.RatingView;
 import com.squareup.picasso.Picasso;
+
+import java.text.DecimalFormat;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -30,7 +35,8 @@ public class GameActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private ConstraintLayout constraintLayout;
     private Button addRatingBtn, submitRatingBtn, cancelRatingBtn, addReviewBtn, submitReviewBtn, cancelReviewBtn;
-    private TextView nameView, versionView, genresView, ratingView, star1View, star2View, star3View, star4View, star5View;
+    private TextView nameView, versionView, genresView, ratingView;
+    private RatingView star1, star2, star3, star4, star5;
     private EditText addReviewName, addReviewTitle, addReviewRating, addReviewMessage;
 
     private Integer newRating;
@@ -49,11 +55,11 @@ public class GameActivity extends AppCompatActivity {
         versionView = findViewById(R.id.gameVersion);
         genresView = findViewById(R.id.gameGenre);
         ratingView = findViewById(R.id.gameRating);
-        star1View = findViewById(R.id.star1);
-        star2View = findViewById(R.id.star2);
-        star3View = findViewById(R.id.star3);
-        star4View = findViewById(R.id.star4);
-        star5View = findViewById(R.id.star5);
+        star1 = findViewById(R.id.star1);
+        star2 = findViewById(R.id.star2);
+        star3 = findViewById(R.id.star3);
+        star4 = findViewById(R.id.star4);
+        star5 = findViewById(R.id.star5);
 
         Intent intent =  getIntent();
         game = (Game) intent.getExtras().getSerializable("game");
@@ -61,13 +67,15 @@ public class GameActivity extends AppCompatActivity {
         nameView.setText(game.getName());
         versionView.setText("Version: " + game.getVersion());
         genresView.setText(game.getGenres());
-        ratingView.setText(game.getAverageRating() + " ratings");
-        star1View.setText(game.getHistogramRating(1));
-        star2View.setText(game.getHistogramRating(2));
-        star3View.setText(game.getHistogramRating(3));
-        star4View.setText(game.getHistogramRating(4));
-        star5View.setText(game.getHistogramRating(5));
 
+        star1.setRating(1, game.getHistogramPercentage(1));
+        star2.setRating(2, game.getHistogramPercentage(2));
+        star3.setRating(3, game.getHistogramPercentage(3));
+        star4.setRating(4, game.getHistogramPercentage(4));
+        star5.setRating(5, game.getHistogramPercentage(5));
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        ratingView.setText(df.format(game.getAverageRating()));
 
         Picasso.get().load(game.getImageUrl()).into(imageView);
         imageView.setClipToOutline(true);

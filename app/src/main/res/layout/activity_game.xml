@@ -109,46 +109,34 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:orientation="vertical"
-                    android:weightSum="5">
+                    android:weightSum="5" >
 
-                    <TextView
+                    <com.example.app.View.RatingView
                         android:id="@+id/star1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#bfbfbf"
-                        android:layout_weight="1"
-                        android:text="@string/test" />
-                    <TextView
+                        android:layout_height="wrap_content" />
+
+                    <com.example.app.View.RatingView
                         android:id="@+id/star2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#bfbfbf"
-                        android:layout_weight="1"
-                        android:text="@string/test" />
-                    <TextView
+                        android:layout_height="wrap_content" />
+
+                    <com.example.app.View.RatingView
                         android:id="@+id/star3"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#bfbfbf"
-                        android:layout_weight="1"
-                        android:text="@string/test" />
-                    <TextView
+                        android:layout_height="wrap_content" />
+
+                    <com.example.app.View.RatingView
                         android:id="@+id/star4"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#bfbfbf"
-                        android:layout_weight="1"
-                        android:text="@string/test" />
-                    <TextView
+                        android:layout_height="wrap_content" />
+
+                    <com.example.app.View.RatingView
                         android:id="@+id/star5"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#bfbfbf"
-                        android:layout_weight="1"
-                        android:text="@string/test" />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
 

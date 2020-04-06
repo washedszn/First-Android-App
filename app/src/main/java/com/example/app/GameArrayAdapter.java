@@ -19,7 +19,6 @@ public class GameArrayAdapter extends ArrayAdapter {
     private LayoutInflater layoutInflater;
     private List<Game> gameList;
     private TextView nameView;
-//    private TextView ratingsView;
     private TextView reviewsView;
     private ImageView imageView;
 

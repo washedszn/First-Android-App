@@ -56,8 +56,8 @@ public class Game implements Serializable {
         return sum / totalRatings;
     }
 
-    public String getHistogramRating(Integer rating) {
-        return this.ratings.get(rating - 1) + " " + rating + "* ratings";
+    public Integer getHistogramPercentage(Integer rating) {
+        return (this.ratings.get(rating - 1) / getTotalRatings()) * 100;
     }
 
     public void setName(String name) { this.name = name; }
@@ -69,6 +69,15 @@ public class Game implements Serializable {
 
     public void changeImage(String imageUrl) { this.imageUrl = imageUrl; }
 
+    public int getTotalRatings() {
+        int sum = 0;
+
+        for (int i = 0; i < this.ratings.size(); i++) {
+            sum += this.ratings.get(i);
+        }
+
+        return sum;
+    }
 
     public void addRating(Integer rating) {
         Integer value;
