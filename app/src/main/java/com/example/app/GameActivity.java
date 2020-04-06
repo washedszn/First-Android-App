@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -83,6 +84,17 @@ public class GameActivity extends AppCompatActivity {
         ReviewArrayAdapter adapter = new ReviewArrayAdapter(this, game.getReviews());
 
         reviewListView.setAdapter(adapter);
+
+        reviewListView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(GameActivity.this, ReviewActivity.class);
+                        intent.putExtra("review", game.getReviews().get(position));
+                        startActivity(intent);
+                    }
+                }
+        );
 
         addRatingBtn = findViewById(R.id.addRatingBtn);
         addReviewBtn = findViewById(R.id.addReviewBtn);

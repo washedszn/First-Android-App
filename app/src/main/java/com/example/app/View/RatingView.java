@@ -30,11 +30,6 @@ public class RatingView extends LinearLayout {
         init();
     }
 
-    public RatingView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     public void init() {
         LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.rating_view, this);
@@ -45,6 +40,9 @@ public class RatingView extends LinearLayout {
 
     public void setRating(int rating, int progress) {
         this.ratingBar.setRating(rating);
+
+        this.progressBar.setProgress(0);
+        this.progressBar.setProgress(100);
         this.progressBar.setProgress(progress);
     }
 }

@@ -8,17 +8,16 @@
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         style= "@style/CustomRatingBar"
-        android:numStars="5"
-        android:stepSize="0.01"
-        android:isIndicator="true"/>
+        android:numStars="5"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:max="100" />
+        android:layout_marginVertical="8dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="2dp"
+        style="@android:style/Widget.ProgressBar.Horizontal" />
 
 </LinearLayout>
