@@ -12,28 +12,28 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/addReviewName"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="text"
             android:hint="Name" />
 
         <EditText
-            android:id="@+id/addReviewTitle"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="text"
             android:hint="Title" />
 
         <EditText
-            android:id="@+id/addReviewRating"
+            android:id="@+id/rating"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number"
             android:hint="Rating" />
 
         <EditText
-            android:id="@+id/addReviewMessage"
+            android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="#000000"
@@ -47,13 +47,13 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/cancelReviewBtn"
+            android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel" />
 
         <Button
-            android:id="@+id/submitReviewBtn"
+            android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/submit"/>

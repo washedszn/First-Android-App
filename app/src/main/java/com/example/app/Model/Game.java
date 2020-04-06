@@ -72,12 +72,12 @@ public class Game implements Serializable {
 
     public void deleteReview(int i) { this.reviews.remove(i); }
 
-    public void addReview(Integer rating, String name, String message, String version, String title) {
-        Review newReview = new Review(rating, name, message, version, title);
-        reviews.add(newReview);
-    }
+    public void addReview(Review newReview) { this.reviews.add(newReview); }
 
-    public void changeImage(String imageUrl) { this.imageUrl = imageUrl; }
+    public void editReview(Review editedReview, Review oldReview) {
+        int position = this.reviews.indexOf(oldReview);
+        this.reviews.set(position, editedReview);
+    }
 
     public Integer getTotalRatings() {
         int sum = 0;
@@ -118,7 +118,5 @@ public class Game implements Serializable {
                 this.ratings.set(4, value);
                 break;
         }
-
-        Log.e("boop", this.ratings.toString());
     }
 }

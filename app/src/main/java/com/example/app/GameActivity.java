@@ -1,13 +1,11 @@
 package com.example.app;
 
-import androidx.annotation.ContentView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,19 +20,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
 import com.example.app.Model.Review;
+import com.example.app.View.ManageGamePopup;
+import com.example.app.View.ManageReviewPopup;
 import com.example.app.View.RatingView;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
@@ -55,6 +52,8 @@ public class GameActivity extends AppCompatActivity {
     private Integer newRating;
     private Game game;
     private int gamePosition;
+
+    private ManageReviewPopup manageReviewPopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,46 +160,15 @@ public class GameActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        LayoutInflater layoutInflater = (LayoutInflater) GameActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        View customView = layoutInflater.inflate(R.layout.add_review, null);
 
-                        addReviewName = customView.findViewById(R.id.addReviewName);
-                        addReviewTitle = customView.findViewById(R.id.addReviewTitle);
-                        addReviewRating = customView.findViewById(R.id.addReviewRating);
-                        addReviewMessage = customView.findViewById(R.id.addReviewMessage);
+                        ManageReviewPopup manageReviewPopup = new ManageReviewPopup(GameActivity.this, "ADD", game);
 
-                        cancelReviewBtn = customView.findViewById(R.id.cancelReviewBtn);
-                        submitReviewBtn = customView.findViewById(R.id.submitReviewBtn);
+                        popupWindow = new PopupWindow(manageReviewPopup.getView(), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-                        popupWindow = new PopupWindow(customView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-
+                        manageReviewPopup.setPopupWindow(popupWindow);
                         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
                         popupWindow.setFocusable(true);
                         popupWindow.update();
-
-                        submitReviewBtn.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-
-                                Log.e("test", "fired");
-
-                                String name = addReviewName.getText().toString();
-                                String title = addReviewTitle.getText().toString();
-                                int rating = Integer.parseInt(addReviewRating.getText().toString());
-                                String message = addReviewMessage.getText().toString();
-
-                                game.addReview(rating, name, message, game.getVersion(), title);
-                                popupWindow.dismiss();
-                            }
-                        });
-
-                        cancelReviewBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                popupWindow.dismiss();
-                            }
-                        });
                     }
                 }
         );
@@ -254,53 +222,14 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        LayoutInflater layoutInflater = (LayoutInflater) GameActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View customView = layoutInflater.inflate(R.layout.add_game, null);
+        ManageGamePopup manageGamePopup = new ManageGamePopup(GameActivity.this, "EDIT", game);
 
-        addGameName = customView.findViewById(R.id.addGameName);
-        addGameVersion = customView.findViewById(R.id.addGameVersion);
-        addGameGenre = customView.findViewById(R.id.addGameGenre);
-        addGameImageUrl = customView.findViewById(R.id.addGameImageUrl);
+        popupWindow = new PopupWindow(manageGamePopup.getView(), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-        addGameName.setText(game.getName());
-        addGameVersion.setText(game.getVersion());
-        addGameGenre.setText(game.getGenres());
-        addGameImageUrl.setText(game.getImageUrl());
-
-        cancelGameBtn = customView.findViewById(R.id.cancelGameBtn);
-        submitGameBtn = customView.findViewById(R.id.submitGameBtn);
-
-        popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
+        manageGamePopup.setPopupWindow(popupWindow);
         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
         popupWindow.setFocusable(true);
         popupWindow.update();
-
-        submitGameBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                String name = addGameName.getText().toString();
-                String version =  addGameVersion.getText().toString();
-                String genre = addGameGenre.getText().toString();
-                String imageUrl = addGameImageUrl.getText().toString();
-                List<Integer> ratings = game.getRatings();
-                List<Review> reviews = game.getReviews();
-
-                GameAdmin.deleteGame(gamePosition);
-                GameAdmin.addGame(new Game(name, version, genre, reviews, ratings, imageUrl));
-                popupWindow.dismiss();
-            }
-        });
-
-        cancelGameBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
 
         return super.onOptionsItemSelected(item);
     }

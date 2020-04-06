@@ -90,6 +90,11 @@ public class GameAdmin {
         }
     }
 
+    public static void editGame(Game editedGame, Game oldGame) {
+        int position = games.indexOf(oldGame);
+        games.set(position, editedGame);
+    }
+
     public static void addGame(Game game) { games.add(game); }
 
     public static void deleteGame(int position) { games.remove(position); }

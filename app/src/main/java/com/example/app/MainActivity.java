@@ -2,7 +2,6 @@ package com.example.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,9 +21,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
 import com.example.app.Model.Review;
+import com.example.app.View.ManageGamePopup;
+import com.example.app.View.ManageReviewPopup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -93,53 +93,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View customView = layoutInflater.inflate(R.layout.add_game, null);
+        ManageGamePopup manageGamePopup = new ManageGamePopup(this, "ADD");
 
-        addGameName = customView.findViewById(R.id.addGameName);
-        addGameVersion = customView.findViewById(R.id.addGameVersion);
-        addGameGenre = customView.findViewById(R.id.addGameGenre);
-        addGameImageUrl = customView.findViewById(R.id.addGameImageUrl);
+        popupWindow = new PopupWindow(manageGamePopup.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        cancelGameBtn = customView.findViewById(R.id.cancelGameBtn);
-        submitGameBtn = customView.findViewById(R.id.submitGameBtn);
-
-        popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
+        manageGamePopup.setPopupWindow(popupWindow);
         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
         popupWindow.setFocusable(true);
         popupWindow.update();
-
-        submitGameBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                String name = addGameName.getText().toString();
-                String version =  addGameVersion.getText().toString();
-                String genre = addGameGenre.getText().toString();
-                String imageUrl = addGameImageUrl.getText().toString();
-                ArrayList<Integer> ratings = new ArrayList<>();
-                ArrayList<Review> reviews = new ArrayList<>();
-
-                ratings.add(0);
-                ratings.add(0);
-                ratings.add(0);
-                ratings.add(0);
-                ratings.add(0);
-
-                GameAdmin.addGame(new Game(name, version, genre, reviews, ratings, imageUrl));
-                popupWindow.dismiss();
-            }
-        });
-
-        cancelGameBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
 
         return super.onOptionsItemSelected(item);
     }

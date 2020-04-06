@@ -3,15 +3,11 @@ package com.example.app;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
@@ -20,6 +16,7 @@ import android.widget.TextView;
 import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
 import com.example.app.Model.Review;
+import com.example.app.View.ManageReviewPopup;
 
 public class ReviewActivity extends AppCompatActivity {
 
@@ -61,52 +58,14 @@ public class ReviewActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        LayoutInflater layoutInflater = (LayoutInflater) ReviewActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        View customView = layoutInflater.inflate(R.layout.add_review, null);
+                        ManageReviewPopup manageReviewPopup = new ManageReviewPopup(ReviewActivity.this, "EDIT", game, review);
 
-                        addReviewName = customView.findViewById(R.id.addReviewName);
-                        addReviewTitle = customView.findViewById(R.id.addReviewTitle);
-                        addReviewRating = customView.findViewById(R.id.addReviewRating);
-                        addReviewMessage = customView.findViewById(R.id.addReviewMessage);
+                        popupWindow = new PopupWindow(manageReviewPopup.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-                        addReviewName.setText(review.getName());
-                        addReviewTitle.setText(review.getTitle());
-                        addReviewRating.setText(review.getRating() + "");
-                        addReviewMessage.setText(review.getMessage());
-
-                        cancelReviewBtn = customView.findViewById(R.id.cancelReviewBtn);
-                        submitReviewBtn = customView.findViewById(R.id.submitReviewBtn);
-
-                        popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
+                        manageReviewPopup.setPopupWindow(popupWindow);
                         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
                         popupWindow.setFocusable(true);
                         popupWindow.update();
-
-                        submitReviewBtn.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-
-                                Log.e("test", "fired");
-
-                                String name = addReviewName.getText().toString();
-                                String title = addReviewTitle.getText().toString();
-                                int rating = Integer.parseInt(addReviewRating.getText().toString());
-                                String message = addReviewMessage.getText().toString();
-
-                                game.deleteReview(reviewPosition);
-                                game.addReview(rating, name, message, game.getVersion(), title);
-                                popupWindow.dismiss();
-                            }
-                        });
-
-                        cancelReviewBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                popupWindow.dismiss();
-                            }
-                        });
                     }
                 }
         );

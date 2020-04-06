@@ -11,25 +11,25 @@
         android:orientation="vertical" >
 
         <EditText
-            android:id="@+id/addGameName"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Name" />
 
         <EditText
-            android:id="@+id/addGameVersion"
+            android:id="@+id/version"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Version" />
 
         <EditText
-            android:id="@+id/addGameGenre"
+            android:id="@+id/genre"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Genre" />
 
         <EditText
-            android:id="@+id/addGameImageUrl"
+            android:id="@+id/imageUrl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textIsSelectable="true"
@@ -42,13 +42,13 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/cancelGameBtn"
+            android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel" />
 
         <Button
-            android:id="@+id/submitGameBtn"
+            android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/submit"/>
