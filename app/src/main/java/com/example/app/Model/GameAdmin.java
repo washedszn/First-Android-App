@@ -1,28 +1,24 @@
 package com.example.app.Model;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 public class GameAdmin {
 
-    public static ArrayList<Game> games;
+    private static ArrayList<Game> games;
 
     static {
         games = new ArrayList<>();
     }
 
-    public static String readJsonAsset(Context context) throws IOException {
+    private static String readJsonAsset(Context context) throws IOException {
         String jsonString;
         InputStream is = context.getAssets().open("games.json");
 
@@ -36,7 +32,7 @@ public class GameAdmin {
         return jsonString;
     }
 
-    public static ArrayList<Review> formatReviews(JSONArray reviewsArray) throws JSONException {
+    private static ArrayList<Review> formatReviews(JSONArray reviewsArray) throws JSONException {
         ArrayList<Review> reviews = new ArrayList<>();
 
         for (int x = 0; x < reviewsArray.length(); x++) {
@@ -54,7 +50,7 @@ public class GameAdmin {
         return reviews;
     }
 
-    public static ArrayList<Integer> formatRatings(JSONArray ratingsArray) throws JSONException {
+    private static ArrayList<Integer> formatRatings(JSONArray ratingsArray) throws JSONException {
         ArrayList<Integer> formattedRatings = new ArrayList<>();
 
         for (int i = 0; i < ratingsArray.length(); i++) {

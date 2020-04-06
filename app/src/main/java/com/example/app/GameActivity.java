@@ -12,11 +12,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -25,53 +23,42 @@ import android.widget.TextView;
 
 import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
-import com.example.app.Model.Review;
 import com.example.app.View.ManageGamePopup;
 import com.example.app.View.ManageReviewPopup;
 import com.example.app.View.RatingView;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
-    private ListView reviewListView;
-    private ImageView imageView;
     private PopupWindow popupWindow;
     private ConstraintLayout constraintLayout;
-    private Button addRatingBtn, submitRatingBtn, cancelRatingBtn, addReviewBtn, submitReviewBtn, cancelReviewBtn;
-    private TextView nameView, versionView, genresView, ratingView;
-    private RatingView star1, star2, star3, star4, star5;
-    private EditText addReviewName, addReviewTitle, addReviewRating, addReviewMessage;
-
-    private Button submitGameBtn, cancelGameBtn;
-    private EditText addGameName, addGameVersion, addGameGenre, addGameImageUrl;
+    private Button submitRatingBtn;
+    private Button cancelRatingBtn;
 
     private ReviewArrayAdapter adapter;
     private Integer newRating;
     private Game game;
     private int gamePosition;
 
-    private ManageReviewPopup manageReviewPopup;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        reviewListView = findViewById(R.id.reviewListView);
+        ListView reviewListView = findViewById(R.id.reviewListView);
 
-        imageView = findViewById(R.id.gameImage);
-        nameView = findViewById(R.id.gameName);
-        versionView = findViewById(R.id.gameVersion);
-        genresView = findViewById(R.id.gameGenre);
-        ratingView = findViewById(R.id.gameRating);
-        star1 = findViewById(R.id.star1);
-        star2 = findViewById(R.id.star2);
-        star3 = findViewById(R.id.star3);
-        star4 = findViewById(R.id.star4);
-        star5 = findViewById(R.id.star5);
+        ImageView imageView = findViewById(R.id.gameImage);
+        TextView nameView = findViewById(R.id.gameName);
+        TextView versionView = findViewById(R.id.gameVersion);
+        TextView genresView = findViewById(R.id.gameGenre);
+        TextView ratingView = findViewById(R.id.gameRating);
+        RatingView star1 = findViewById(R.id.star1);
+        RatingView star2 = findViewById(R.id.star2);
+        RatingView star3 = findViewById(R.id.star3);
+        RatingView star4 = findViewById(R.id.star4);
+        RatingView star5 = findViewById(R.id.star5);
 
         Intent intent =  getIntent();
         gamePosition = intent.getExtras().getInt("game");
@@ -121,8 +108,8 @@ public class GameActivity extends AppCompatActivity {
                 }
         );
 
-        addRatingBtn = findViewById(R.id.addRatingBtn);
-        addReviewBtn = findViewById(R.id.addReviewBtn);
+        Button addRatingBtn = findViewById(R.id.addRatingBtn);
+        Button addReviewBtn = findViewById(R.id.addReviewBtn);
         constraintLayout = findViewById(R.id.game_activity);
 
         addRatingBtn.setOnClickListener(
@@ -174,41 +161,6 @@ public class GameActivity extends AppCompatActivity {
         );
     }
 
-    public void onRadioBtnClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        switch(view.getId()) {
-            case R.id.radio_1_star:
-                if (checked)
-                    newRating = 1;
-                    break;
-            case R.id.radio_2_star:
-                if (checked)
-                    newRating = 2;
-                    break;
-            case R.id.radio_3_star:
-                if (checked)
-                    newRating = 3;
-                    break;
-            case R.id.radio_4_star:
-                if (checked)
-                    newRating = 4;
-                    break;
-            case R.id.radio_5_star:
-                if (checked)
-                    newRating = 5;
-                    break;
-        }
-    }
-
-    @Override
-    protected void onResume()
-    {
-        // TODO Auto-generated method stub
-        super.onResume();
-        adapter.notifyDataSetChanged();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -232,5 +184,40 @@ public class GameActivity extends AppCompatActivity {
         popupWindow.update();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        // TODO Auto-generated method stub
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void onRadioBtnClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.radio_1_star:
+                if (checked)
+                    newRating = 1;
+                break;
+            case R.id.radio_2_star:
+                if (checked)
+                    newRating = 2;
+                break;
+            case R.id.radio_3_star:
+                if (checked)
+                    newRating = 3;
+                break;
+            case R.id.radio_4_star:
+                if (checked)
+                    newRating = 4;
+                break;
+            case R.id.radio_5_star:
+                if (checked)
+                    newRating = 5;
+                break;
+        }
     }
 }

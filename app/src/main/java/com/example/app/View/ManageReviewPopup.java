@@ -14,7 +14,6 @@ import com.example.app.R;
 
 public class ManageReviewPopup extends LinearLayout {
     private EditText nameView, titleView, ratingView, messageView;
-    private Button submit, cancel;
     private String type;
     private Game game;
     private Review review;
@@ -45,8 +44,8 @@ public class ManageReviewPopup extends LinearLayout {
         ratingView = customView.findViewById(R.id.rating);
         messageView = customView.findViewById(R.id.message);
 
-        submit = customView.findViewById(R.id.submit);
-        cancel = customView.findViewById(R.id.cancel);
+        Button submit = customView.findViewById(R.id.submit);
+        Button cancel = customView.findViewById(R.id.cancel);
 
         if (this.type.equals("EDIT")) {
             nameView.setText(review.getName());

@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -22,10 +21,6 @@ public class ReviewActivity extends AppCompatActivity {
 
     private Game game;
     private Review review;
-
-    private TextView reviewTitle, reviewVersion, reviewName, reviewMessage;
-    private EditText addReviewName, addReviewTitle, addReviewRating, addReviewMessage;
-    private Button editBtn, submitReviewBtn, cancelReviewBtn;
     private PopupWindow popupWindow;
     private ConstraintLayout constraintLayout;
 
@@ -34,11 +29,11 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-        reviewTitle = findViewById(R.id.reviewTitle);
-        reviewVersion = findViewById(R.id.reviewVersion);
-        reviewName = findViewById(R.id.reviewName);
-        reviewMessage = findViewById(R.id.reviewMessage);
-        editBtn = findViewById(R.id.editBtn);
+        TextView reviewTitle = findViewById(R.id.reviewTitle);
+        TextView reviewVersion = findViewById(R.id.reviewVersion);
+        TextView reviewName = findViewById(R.id.reviewName);
+        TextView reviewMessage = findViewById(R.id.reviewMessage);
+        Button editBtn = findViewById(R.id.editBtn);
 
         Intent intent = getIntent();
         int gamePosition = intent.getExtras().getInt("game");

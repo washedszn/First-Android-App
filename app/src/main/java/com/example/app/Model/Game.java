@@ -1,15 +1,6 @@
 package com.example.app.Model;
 
-import android.util.Log;
-
-import org.json.JSONObject;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Game implements Serializable {
@@ -55,9 +46,6 @@ public class Game implements Serializable {
             totalRatings += this.ratings.get(i);
         }
 
-        DecimalFormat df = new DecimalFormat("#.#");
-
-        //return df.format(sum / totalRatings) + "";
         return sum / totalRatings;
     }
 
@@ -79,7 +67,7 @@ public class Game implements Serializable {
         this.reviews.set(position, editedReview);
     }
 
-    public Integer getTotalRatings() {
+    private Integer getTotalRatings() {
         int sum = 0;
 
         for (int i = 0; i < this.ratings.size(); i++) {

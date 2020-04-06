@@ -3,45 +3,32 @@ package com.example.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
-import com.example.app.Model.Review;
 import com.example.app.View.ManageGamePopup;
-import com.example.app.View.ManageReviewPopup;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView gameListView;
     private GameArrayAdapter adapter;
-
     private ConstraintLayout constraintLayout;
-    private PopupWindow popupWindow;
-    private Button submitGameBtn, cancelGameBtn;
-    private EditText addGameName, addGameVersion, addGameGenre, addGameImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gameListView = findViewById(R.id.ListView);
+        ListView gameListView = findViewById(R.id.ListView);
         constraintLayout = findViewById(R.id.main_activity);
 
         GameAdmin.initGames(this);
@@ -95,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         ManageGamePopup manageGamePopup = new ManageGamePopup(this, "ADD");
 
-        popupWindow = new PopupWindow(manageGamePopup.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        PopupWindow popupWindow = new PopupWindow(manageGamePopup.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         manageGamePopup.setPopupWindow(popupWindow);
         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);

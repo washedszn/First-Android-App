@@ -15,11 +15,6 @@ public class ReviewArrayAdapter extends ArrayAdapter {
 
     private LayoutInflater layoutInflater;
     private List<Review> reviewList;
-    private TextView titleView;
-    private TextView versionView;
-    private TextView nameView;
-    private TextView ratingView;
-    private TextView messageView;
 
     public ReviewArrayAdapter(Context context, List objects) {
         super (context, R.layout.review_list_view, objects);
@@ -34,11 +29,11 @@ public class ReviewArrayAdapter extends ArrayAdapter {
             convertView = layoutInflater.inflate(R.layout.review_list_view, parent, false);
         }
 
-        titleView = convertView.findViewById(R.id.reviewTitle);
-        versionView = convertView.findViewById(R.id.reviewVersion);
-        nameView = convertView.findViewById(R.id.reviewName);
-        ratingView = convertView.findViewById(R.id.reviewRating);
-        messageView = convertView.findViewById(R.id.reviewMessage);
+        TextView titleView = convertView.findViewById(R.id.reviewTitle);
+        TextView versionView = convertView.findViewById(R.id.reviewVersion);
+        TextView nameView = convertView.findViewById(R.id.reviewName);
+        TextView ratingView = convertView.findViewById(R.id.reviewRating);
+        TextView messageView = convertView.findViewById(R.id.reviewMessage);
 
         Review review = reviewList.get(position);
 

@@ -18,11 +18,6 @@ public class GameArrayAdapter extends ArrayAdapter {
 
     private LayoutInflater layoutInflater;
     private List<Game> gameList;
-    private TextView nameView;
-    private TextView reviewsView;
-    private ImageView imageView;
-
-    private RatingBar ratingsBar;
 
     public GameArrayAdapter(Context context, List objects) {
         super (context, R.layout.game_list_view, objects);
@@ -37,11 +32,11 @@ public class GameArrayAdapter extends ArrayAdapter {
             convertView = layoutInflater.inflate(R.layout.game_list_view, parent, false);
         }
 
-        nameView = convertView.findViewById(R.id.name);
-        reviewsView = convertView.findViewById(R.id.review);
-        imageView = convertView.findViewById(R.id.imageView);
+        TextView nameView = convertView.findViewById(R.id.name);
+        TextView reviewsView = convertView.findViewById(R.id.review);
+        ImageView imageView = convertView.findViewById(R.id.imageView);
 
-        ratingsBar = convertView.findViewById(R.id.rating);
+        RatingBar ratingsBar = convertView.findViewById(R.id.rating);
 
         Game game = gameList.get(position);
 
