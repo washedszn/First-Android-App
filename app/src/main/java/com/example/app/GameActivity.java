@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app.Adapter.ReviewArrayAdapter;
 import com.example.app.Model.Game;
@@ -214,6 +215,22 @@ public class GameActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        Intent refresh = new Intent(this, GameActivity.class);
+        refresh.putExtra("game", gamePosition);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            finish();
+            startActivity(refresh);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            finish();
+            startActivity(refresh);
+        }
     }
 
     public void setLocale(String lang) {

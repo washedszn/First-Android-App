@@ -21,6 +21,6 @@ public class Review implements Serializable {
     public Integer getRating() { return this.rating; }
     public String getName() { return this.name; }
     public String getMessage() { return this.message; }
-    public String getVersion() { return "Version: " + this.version; }
+    public String getVersion() { return this.version; }
     public String getTitle() { return this.title; }
 }

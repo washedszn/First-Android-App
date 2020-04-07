@@ -18,7 +18,8 @@
         <com.example.app.View.DrawRatingView
             android:id="@+id/drawRating"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
         <View
             android:layout_width="match_parent"
