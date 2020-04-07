@@ -1,14 +1,17 @@
 package com.example.app.View;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.example.app.Model.Game;
+import com.example.app.Model.GameAdmin;
 import com.example.app.Model.Review;
 import com.example.app.R;
 
@@ -18,7 +21,7 @@ public class ManageReviewPopup extends LinearLayout {
     private Game game;
     private Review review;
     private PopupWindow popupWindow;
-    private static View customView;
+    private View customView;
 
     public ManageReviewPopup(Context context, String type, Game game) {
         super(context);
@@ -44,30 +47,14 @@ public class ManageReviewPopup extends LinearLayout {
         ratingView = customView.findViewById(R.id.rating);
         messageView = customView.findViewById(R.id.message);
 
-        Button submit = customView.findViewById(R.id.submit);
-        Button cancel = customView.findViewById(R.id.cancel);
-
         if (this.type.equals("EDIT")) {
+            String rating = "" + review.getRating();
+
             nameView.setText(review.getName());
             titleView.setText(review.getTitle());
-            ratingView.setText(review.getRating() + "");
+            ratingView.setText(rating);
             messageView.setText(review.getMessage());
         }
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitHandler();
-                popupWindow.dismiss();
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
     }
 
     public void submitHandler() {
@@ -90,5 +77,5 @@ public class ManageReviewPopup extends LinearLayout {
 
     public void setPopupWindow(PopupWindow p) { this.popupWindow = p; }
 
-    public static View getView() { return customView; }
+    public View getView() { return customView; }
 }

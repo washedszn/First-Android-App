@@ -1,5 +1,7 @@
 package com.example.app.Model;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -58,13 +60,30 @@ public class Game implements Serializable {
 
     public void setName(String name) { this.name = name; }
 
-    public void deleteReview(int i) { this.reviews.remove(i); }
+    public void deleteReview(int i) {
+        int star = this.reviews.get(i).getRating();
+        this.ratings.set(star - 1, this.ratings.get(star - 1) - 1);
+        this.reviews.remove(i);
+    }
 
-    public void addReview(Review newReview) { this.reviews.add(newReview); }
+    public void addReview(Review newReview) {
+        this.reviews.add(newReview);
+        int star = newReview.getRating();
+        this.ratings.set(star - 1, this.ratings.get(star - 1) + 1);
+        Log.e("test", this.ratings.toString());
+    }
 
     public void editReview(Review editedReview, Review oldReview) {
         int position = this.reviews.indexOf(oldReview);
         this.reviews.set(position, editedReview);
+
+        int old = oldReview.getRating();
+        int edit = editedReview.getRating();
+
+        if (old != edit) {
+            this.ratings.set(old - 1, this.ratings.get(old - 1) - 1);
+            this.ratings.set(edit - 1, this.ratings.get(edit - 1) + 1);
+        }
     }
 
     private Integer getTotalRatings() {
@@ -78,33 +97,7 @@ public class Game implements Serializable {
     }
 
     public void addRating(Integer rating) {
-        Integer value;
-        switch(rating) {
-            case 1:
-                value = this.ratings.get(0);
-                value = value + 1;
-                this.ratings.set(0, value);
-                break;
-            case 2:
-                value = this.ratings.get(1);
-                value = value + 1;
-                this.ratings.set(1, value);
-                break;
-            case 3:
-                value = this.ratings.get(2);
-                value = value + 1;
-                this.ratings.set(2, value);
-                break;
-            case 4:
-                value = this.ratings.get(3);
-                value = value + 1;
-                this.ratings.set(3, value);
-                break;
-            case 5:
-                value = this.ratings.get(4);
-                value = value + 1;
-                this.ratings.set(4, value);
-                break;
-        }
+        this.ratings.set(rating - 1, this.ratings.get(rating - 1) + 1);
+        Log.e("test", this.ratings.toString());
     }
 }

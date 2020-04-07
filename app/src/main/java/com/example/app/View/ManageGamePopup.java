@@ -23,7 +23,7 @@ public class ManageGamePopup extends LinearLayout {
     private String type;
     private Game game;
     private PopupWindow popupWindow;
-    private static View customView;
+    private View customView;
 
     public ManageGamePopup(Context context, String type) {
         super(context);
@@ -47,30 +47,12 @@ public class ManageGamePopup extends LinearLayout {
         genreView = customView.findViewById(R.id.genre);
         imageUrlView = customView.findViewById(R.id.imageUrl);
 
-        Button submit = customView.findViewById(R.id.submit);
-        Button cancel = customView.findViewById(R.id.cancel);
-
         if (this.type.equals("EDIT")) {
             nameView.setText(game.getName());
             versionView.setText(game.getVersion());
             genreView.setText(game.getGenres());
             imageUrlView.setText(game.getImageUrl());
         }
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitHandler();
-                popupWindow.dismiss();
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
     }
 
     public void submitHandler() {
@@ -101,5 +83,5 @@ public class ManageGamePopup extends LinearLayout {
 
     public void setPopupWindow(PopupWindow p) { this.popupWindow = p; }
 
-    public static View getView() { return customView; }
+    public View getView() { return customView; }
 }

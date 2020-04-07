@@ -3,12 +3,15 @@ package com.example.app;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,19 +37,23 @@ public class ReviewActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private ConstraintLayout constraintLayout;
     private DrawRatingView drawRatingView;
+    private ManageReviewPopup manageReviewPopup;
     private int gamePosition, reviewPosition;
+
+    private TextView reviewTitle, reviewVersion, reviewName, reviewMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-        TextView reviewTitle = findViewById(R.id.reviewTitle);
-        TextView reviewVersion = findViewById(R.id.reviewVersion);
-        TextView reviewName = findViewById(R.id.reviewName);
-        TextView reviewMessage = findViewById(R.id.reviewMessage);
-        Button editBtn = findViewById(R.id.editBtn);
+        reviewTitle = findViewById(R.id.reviewTitle);
+        reviewVersion = findViewById(R.id.reviewVersion);
+        reviewName = findViewById(R.id.reviewName);
+        reviewMessage = findViewById(R.id.reviewMessage);
         drawRatingView = findViewById(R.id.drawRating);
+
+        Button editBtn = findViewById(R.id.editBtn);
 
         Intent intent = getIntent();
         gamePosition = intent.getExtras().getInt("game");
@@ -73,7 +80,9 @@ public class ReviewActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ManageReviewPopup manageReviewPopup = new ManageReviewPopup(ReviewActivity.this, "EDIT", game, review);
+                        Game editTemp = GameAdmin.getGame(gamePosition);
+                        Review editReview = editTemp.getReview(reviewPosition);
+                        manageReviewPopup = new ManageReviewPopup(ReviewActivity.this, "EDIT", game, editReview);
 
                         popupWindow = new PopupWindow(manageReviewPopup.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -81,9 +90,57 @@ public class ReviewActivity extends AppCompatActivity {
                         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
                         popupWindow.setFocusable(true);
                         popupWindow.update();
+
+                        View customView = manageReviewPopup.getView();
+
+                        Button submit = customView.findViewById(R.id.submit);
+                        Button cancel = customView.findViewById(R.id.cancel);
+
+                        submit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                manageReviewPopup.submitHandler();
+
+                                Intent refresh = new Intent(ReviewActivity.this, ReviewActivity.class);
+                                refresh.putExtra("game", gamePosition);
+                                refresh.putExtra("review", reviewPosition);
+                                finish();
+                                startActivity(refresh);
+
+                                popupWindow.dismiss();
+                            }
+                        });
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                popupWindow.dismiss();
+                            }
+                        });
                     }
                 }
         );
+    }
+
+    public void updateReviewViews() {
+
+        TextView titleView2 = findViewById(R.id.reviewTitle);
+        TextView versionView2 = findViewById(R.id.reviewVersion);
+        TextView nameView2 = findViewById(R.id.reviewName);
+        TextView messageView2 = findViewById(R.id.reviewMessage);
+        DrawRatingView ratingView2 = findViewById(R.id.drawRating);
+
+        String title = getString(R.string.title) + ": " + review.getTitle();
+        String version = getString(R.string.version) + ": " + review.getVersion();
+        String name = getString(R.string.name) + ": " + review.getName();
+        String message = getString(R.string.message) + ": " + review.getMessage();
+
+        titleView2.setText(title);
+        versionView2.setText(version);
+        nameView2.setText(name);
+        messageView2.setText(message);
+
+        ratingView2.setRating(review.getRating());
+
     }
 
     @Override
