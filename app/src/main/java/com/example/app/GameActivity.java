@@ -5,13 +5,17 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,6 +33,7 @@ import com.example.app.View.RatingView;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -66,8 +71,12 @@ public class GameActivity extends AppCompatActivity {
         game = GameAdmin.getGame(gamePosition);
 
         nameView.setText(game.getName());
-        versionView.setText("Version: " + game.getVersion());
-        genresView.setText(game.getGenres());
+
+        String version = getString(R.string.version) + ": " + game.getVersion();
+        String genre = getString(R.string.genre)+ ": " + game.getGenres();
+
+        versionView.setText(version);
+        genresView.setText(genre);
 
         star1.setRating(1, game.getHistogramPercentage(1));
         star2.setRating(2, game.getHistogramPercentage(2));
@@ -162,6 +171,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume()
+    {
+        // TODO Auto-generated method stub
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.right_menu, menu);
@@ -174,24 +191,41 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        ManageGamePopup manageGamePopup = new ManageGamePopup(GameActivity.this, "EDIT", game);
+        switch (item.getItemId()) {
+            case (R.id.menuTitle):
+                ManageGamePopup manageGamePopup = new ManageGamePopup(GameActivity.this, "EDIT", game);
 
-        popupWindow = new PopupWindow(manageGamePopup.getView(), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                popupWindow = new PopupWindow(manageGamePopup.getView(), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-        manageGamePopup.setPopupWindow(popupWindow);
-        popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
-        popupWindow.setFocusable(true);
-        popupWindow.update();
+                manageGamePopup.setPopupWindow(popupWindow);
+                popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
+                popupWindow.setFocusable(true);
+                popupWindow.update();
+
+                break;
+            case (R.id.menuLocal):
+                String local = Locale.getDefault().getLanguage();
+                if (local.equals("en")) {
+                    setLocale("nl");
+                } else {
+                    setLocale("en");
+                }
+                break;
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume()
-    {
-        // TODO Auto-generated method stub
-        super.onResume();
-        adapter.notifyDataSetChanged();
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, GameActivity.class);
+        finish();
+        startActivity(refresh);
     }
 
     public void onRadioBtnClicked(View view) {

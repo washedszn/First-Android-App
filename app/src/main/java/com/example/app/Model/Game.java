@@ -31,7 +31,7 @@ public class Game implements Serializable {
 
     public Review getReview(int i) { return this.reviews.get(i); }
 
-    public String getReviewTotal() { return this.reviews.size() + " reviews"; }
+    public Integer getReviewTotal() { return this.reviews.size(); }
 
     public List<Integer> getRatings() { return this.ratings; }
 

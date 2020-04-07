@@ -1,7 +1,12 @@
 package com.example.app;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +22,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.app.Model.GameAdmin;
 import com.example.app.View.ManageGamePopup;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,15 +87,41 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        ManageGamePopup manageGamePopup = new ManageGamePopup(this, "ADD");
+        switch (item.getItemId()) {
+            case (R.id.menuTitle):
+                ManageGamePopup manageGamePopup = new ManageGamePopup(this, "ADD");
 
-        PopupWindow popupWindow = new PopupWindow(manageGamePopup.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                PopupWindow popupWindow = new PopupWindow(manageGamePopup.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        manageGamePopup.setPopupWindow(popupWindow);
-        popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
-        popupWindow.setFocusable(true);
-        popupWindow.update();
+                manageGamePopup.setPopupWindow(popupWindow);
+                popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
+                popupWindow.setFocusable(true);
+                popupWindow.update();
+
+                break;
+            case (R.id.menuLocal):
+                String local = Locale.getDefault().getDisplayLanguage();
+                Log.e("test", local);
+                if (local.equals("English")) {
+                    setLocale("nl");
+                } else {
+                    setLocale("en");
+                }
+                break;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, MainActivity.class);
+        finish();
+        startActivity(refresh);
     }
 }

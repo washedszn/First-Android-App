@@ -4,13 +4,22 @@
     <string name="out_of_5">out of 5</string>
     <string name="test">test</string>
     <string name="write_review">Write Review</string>
-    <string name="add_rating">Add Rating</string>
-    <string name="_1_star">1 Star</string>
-    <string name="_2_star">2 Star</string>
-    <string name="_3_star">3 Star</string>
+    <string name="add_rating" translatable="false">Add Rating</string>
+    <string name="_1_star" translatable="false">1 Star</string>
+    <string name="_2_star" translatable="false">2 Star</string>
+    <string name="_3_star" translatable="false">3 Star</string>
     <string name="_4_star">4 Star</string>
     <string name="_5_star">5 Star</string>
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="edit">Edit</string>
+    <string name="version">Version</string>
+    <string name="genre">Genre</string>
+    <string name="name">Name</string>
+    <string name="image_url">Image URL</string>
+    <string name="title">Title</string>
+    <string name="rating">Rating</string>
+    <string name="message">Message</string>
+    <string name="reviews">reviews</string>
+    <string name="en_nl">en/nl</string>
 </resources>

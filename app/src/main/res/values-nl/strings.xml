@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">App</string>
+    <string name="ratings_amp_reviews">Beoordelingen en recensies</string>
+    <string name="out_of_5">uit 5</string>
+    <string name="test">test</string>
+    <string name="write_review">schrijf recensie</string>
+    <string name="add_rating">Beoordeling toevoegen</string>
+    <string name="_1_star">1 Ster</string>
+    <string name="_2_star">2 Ster</string>
+    <string name="_3_star">3 Ster</string>
+    <string name="_4_star">4 Ster</string>
+    <string name="_5_star">5 Ster</string>
+    <string name="cancel">Annuleren</string>
+    <string name="submit">Verzenden</string>
+    <string name="edit">Bewerk</string>
+    <string name="version">Versie</string>
+    <string name="genre">Genre</string>
+    <string name="name">Naam</string>
+    <string name="image_url">Afbeelding URL</string>
+    <string name="title">Titel</string>
+    <string name="rating">Beoordeling</string>
+    <string name="message">Bericht</string>
+    <string name="reviews">recensies</string>
+    <string name="en_nl">en/nl</string>
+</resources>

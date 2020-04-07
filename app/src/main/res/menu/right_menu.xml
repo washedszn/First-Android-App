@@ -8,4 +8,10 @@
         android:title="@string/test"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/menuLocal"
+        android:orderInCategory="100"
+        android:title="@string/en_nl"
+        app:showAsAction="ifRoom" />
+
 </menu>

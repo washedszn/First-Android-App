@@ -18,18 +18,20 @@ public class GameArrayAdapter extends ArrayAdapter {
 
     private LayoutInflater layoutInflater;
     private List<Game> gameList;
+    private Context context;
 
     public GameArrayAdapter(Context context, List objects) {
         super (context, R.layout.game_list_view, objects);
-        layoutInflater = LayoutInflater.from(context);
-        gameList = objects;
+        this.layoutInflater = LayoutInflater.from(context);
+        this.gameList = objects;
+        this.context = context;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.game_list_view, parent, false);
+            convertView = this.layoutInflater.inflate(R.layout.game_list_view, parent, false);
         }
 
         TextView nameView = convertView.findViewById(R.id.name);
@@ -38,16 +40,17 @@ public class GameArrayAdapter extends ArrayAdapter {
 
         RatingBar ratingsBar = convertView.findViewById(R.id.rating);
 
-        Game game = gameList.get(position);
+        Game game = this.gameList.get(position);
 
         ratingsBar.setRating((float) game.getAverageRating());
 
+        String reviews = game.getReviewTotal() + " " + this.context.getString(R.string.reviews);
+
         nameView.setText(game.getName());
-        reviewsView.setText(game.getReviewTotal());
+        reviewsView.setText(reviews);
 
         Picasso.get().load(game.getImageUrl()).into(imageView);
         imageView.setClipToOutline(true);
-
 
         return convertView;
     }

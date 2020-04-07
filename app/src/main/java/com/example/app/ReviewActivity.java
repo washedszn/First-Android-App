@@ -48,10 +48,15 @@ public class ReviewActivity extends AppCompatActivity {
 
         drawRatingView.setRating(review.getRating());
 
-        reviewTitle.setText("Title: " + review.getTitle());
-        reviewVersion.setText("Version: " + review.getVersion());
-        reviewName.setText("Name: " + review.getName());
-        reviewMessage.setText("Message: " + review.getMessage());
+        String title = getString(R.string.title) + ": " + review.getTitle();
+        String version = getString(R.string.version) + ": " + review.getVersion();
+        String name = getString(R.string.name) + ": " + review.getName();
+        String message = getString(R.string.message) + ": " + review.getMessage();
+
+        reviewTitle.setText(title);
+        reviewVersion.setText(version);
+        reviewName.setText(name);
+        reviewMessage.setText(message);
 
         constraintLayout = findViewById(R.id.reviewActivity);
 
