@@ -4,8 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +25,8 @@ import com.example.app.View.DrawRatingView;
 import com.example.app.View.StarView;
 import com.example.app.View.ManageReviewPopup;
 
+import java.util.Locale;
+
 public class ReviewActivity extends AppCompatActivity {
 
     private Game game;
@@ -26,6 +34,7 @@ public class ReviewActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private ConstraintLayout constraintLayout;
     private DrawRatingView drawRatingView;
+    private int gamePosition, reviewPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +49,8 @@ public class ReviewActivity extends AppCompatActivity {
         drawRatingView = findViewById(R.id.drawRating);
 
         Intent intent = getIntent();
-        int gamePosition = intent.getExtras().getInt("game");
-        final int reviewPosition = intent.getExtras().getInt("review");
+        gamePosition = intent.getExtras().getInt("game");
+        reviewPosition = intent.getExtras().getInt("review");
 
         game = GameAdmin.getGame(gamePosition);
         review = game.getReview(reviewPosition);
@@ -75,5 +84,46 @@ public class ReviewActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.right_menu, menu);
+
+        String currentLocal = GameAdmin.getLocal() ? "nl" : "en";
+
+        menu.findItem(R.id.menuLocal).setTitle(currentLocal);
+
+        MenuItem hide = menu.findItem(R.id.menuTitle);
+        hide.setVisible(false);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (GameAdmin.getLocal()) {
+            setLocale("nl");
+        } else {
+            setLocale("en");
+        }
+        GameAdmin.setLocal();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, ReviewActivity.class);
+        refresh.putExtra("game", gamePosition);
+        refresh.putExtra("review", reviewPosition);
+        finish();
+        startActivity(refresh);
     }
 }
