@@ -15,7 +15,7 @@ import com.example.app.Model.GameAdmin;
 import com.example.app.Model.Review;
 import com.example.app.R;
 
-public class ManageReviewPopup extends LinearLayout {
+public class ManageReviewView extends LinearLayout {
     private EditText nameView, titleView, ratingView, messageView;
     private String type;
     private Game game;
@@ -23,14 +23,14 @@ public class ManageReviewPopup extends LinearLayout {
     private PopupWindow popupWindow;
     private View customView;
 
-    public ManageReviewPopup(Context context, String type, Game game) {
+    public ManageReviewView(Context context, String type, Game game) {
         super(context);
         this.type = type;
         this.game = game;
         init();
     }
 
-    public ManageReviewPopup(Context context, String type, Game game, Review review) {
+    public ManageReviewView(Context context, String type, Game game, Review review) {
         super(context);
         this.type = type;
         this.game = game;

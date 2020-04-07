@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,13 +24,12 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.app.Adapter.ReviewArrayAdapter;
 import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
-import com.example.app.View.ManageGamePopup;
-import com.example.app.View.ManageReviewPopup;
+import com.example.app.View.ManageGameView;
+import com.example.app.View.ManageReviewView;
 import com.example.app.View.RatingView;
 import com.squareup.picasso.Picasso;
 
@@ -39,15 +39,13 @@ import java.util.Locale;
 public class GameActivity extends AppCompatActivity {
 
     private PopupWindow popupWindow;
-    private ManageReviewPopup manageReviewPopup;
-    private ManageGamePopup manageGamePopup;
+    private ManageReviewView manageReviewView;
+    private ManageGameView manageGameView;
     private ConstraintLayout constraintLayout;
     private Button submitRatingBtn;
     private Button cancelRatingBtn;
-
-    private ImageView imageView;
-    private TextView nameView, versionView, genresView, ratingView;
     private RatingView star1, star2, star3, star4, star5;
+    private TextView ratingView;
 
     private ReviewArrayAdapter adapter;
     private Integer newRating;
@@ -59,12 +57,14 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        Log.e("test", "fired");
+
         ListView reviewListView = findViewById(R.id.reviewListView);
 
-        imageView = findViewById(R.id.gameImage);
-        nameView = findViewById(R.id.gameName);
-        versionView = findViewById(R.id.gameVersion);
-        genresView = findViewById(R.id.gameGenre);
+        ImageView imageView = findViewById(R.id.gameImage);
+        TextView nameView = findViewById(R.id.gameName);
+        TextView versionView = findViewById(R.id.gameVersion);
+        TextView genresView = findViewById(R.id.gameGenre);
         ratingView = findViewById(R.id.gameRating);
         star1 = findViewById(R.id.star1);
         star2 = findViewById(R.id.star2);
@@ -146,6 +146,7 @@ public class GameActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 game.addRating(newRating);
+                                onResume();
                                 popupWindow.dismiss();
                             }
                         });
@@ -164,16 +165,16 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        manageReviewPopup = new ManageReviewPopup(GameActivity.this, "ADD", game);
+                        manageReviewView = new ManageReviewView(GameActivity.this, "ADD", game);
 
-                        popupWindow = new PopupWindow(manageReviewPopup.getView(), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                        popupWindow = new PopupWindow(manageReviewView.getView(), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-                        manageReviewPopup.setPopupWindow(popupWindow);
+                        manageReviewView.setPopupWindow(popupWindow);
                         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
                         popupWindow.setFocusable(true);
                         popupWindow.update();
 
-                        View customView = manageReviewPopup.getView();
+                        View customView = manageReviewView.getView();
 
                         Button submit = customView.findViewById(R.id.submit);
                         Button cancel = customView.findViewById(R.id.cancel);
@@ -181,7 +182,7 @@ public class GameActivity extends AppCompatActivity {
                         submit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                manageReviewPopup.submitHandler();
+                                manageReviewView.submitHandler();
 
                                 Intent refresh = new Intent(GameActivity.this, GameActivity.class);
                                 refresh.putExtra("game", gamePosition);
@@ -206,10 +207,19 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume()
     {
         // TODO Auto-generated method stub
-
+        super.onResume();
         adapter.notifyDataSetChanged();
 
-        super.onResume();
+        Game updatedGame = GameAdmin.getGame(gamePosition);
+
+        star1.setRating(1, updatedGame.getHistogramPercentage(1));
+        star2.setRating(2, updatedGame.getHistogramPercentage(2));
+        star3.setRating(3, updatedGame.getHistogramPercentage(3));
+        star4.setRating(4, updatedGame.getHistogramPercentage(4));
+        star5.setRating(5, updatedGame.getHistogramPercentage(5));
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        ratingView.setText(df.format(updatedGame.getAverageRating()));
     }
 
     @Override
@@ -230,16 +240,16 @@ public class GameActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case (R.id.menuTitle):
-                manageGamePopup = new ManageGamePopup(GameActivity.this, "EDIT", game);
+                manageGameView = new ManageGameView(GameActivity.this, "EDIT", game);
 
-                popupWindow = new PopupWindow(manageGamePopup.getView(), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                popupWindow = new PopupWindow(manageGameView.getView(), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-                manageGamePopup.setPopupWindow(popupWindow);
+                manageGameView.setPopupWindow(popupWindow);
                 popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
                 popupWindow.setFocusable(true);
                 popupWindow.update();
 
-                View customView = manageGamePopup.getView();
+                View customView = manageGameView.getView();
 
                 Button submit = customView.findViewById(R.id.submit);
                 Button cancel = customView.findViewById(R.id.cancel);
@@ -247,7 +257,7 @@ public class GameActivity extends AppCompatActivity {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        manageGamePopup.submitHandler();
+                        manageGameView.submitHandler();
 
                         Intent refresh = new Intent(GameActivity.this, GameActivity.class);
                         refresh.putExtra("game", gamePosition);

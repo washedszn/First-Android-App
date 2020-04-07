@@ -3,7 +3,6 @@ package com.example.app.View;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -17,21 +16,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ManageGamePopup extends LinearLayout {
+public class ManageGameView extends LinearLayout {
 
     private EditText nameView, versionView, genreView, imageUrlView;
     private String type;
     private Game game;
-    private PopupWindow popupWindow;
     private View customView;
 
-    public ManageGamePopup(Context context, String type) {
+    public ManageGameView(Context context, String type) {
         super(context);
         this.type = type;
         init();
     }
 
-    public ManageGamePopup(Context context, String type, Game game) {
+    public ManageGameView(Context context, String type, Game game) {
         super(context);
         this.type = type;
         this.game = game;
@@ -81,7 +79,8 @@ public class ManageGamePopup extends LinearLayout {
         }
     }
 
-    public void setPopupWindow(PopupWindow p) { this.popupWindow = p; }
+    public void setPopupWindow(PopupWindow p) {
+    }
 
     public View getView() { return customView; }
 }

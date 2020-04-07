@@ -10,7 +10,10 @@ import androidx.annotation.Nullable;
 import com.example.app.R;
 
 public class DrawRatingView extends LinearLayout {
-    private StarView star1, star2, star3, star4, star5;
+    private StarView star2;
+    private StarView star3;
+    private StarView star4;
+    private StarView star5;
 
     public DrawRatingView(Context context) {
         super(context);
@@ -31,7 +34,6 @@ public class DrawRatingView extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.draw_rating_view, this);
 
-        star1 = findViewById(R.id.star1);
         star2 = findViewById(R.id.star2);
         star3 = findViewById(R.id.star3);
         star4 = findViewById(R.id.star4);

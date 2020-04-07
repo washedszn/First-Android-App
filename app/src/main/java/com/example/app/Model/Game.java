@@ -23,7 +23,9 @@ public class Game implements Serializable {
         this.ratings = ratings;
     }
 
-    public String getImageUrl() { return this.imageUrl; }
+    public String getImageUrl() {
+        return this.imageUrl.equals("") ? "https://www.brownbagmarketing.com/wp-content/uploads/2013/08/IOS7-Icon-Grid-System.png" : this.imageUrl;
+    }
 
     public String getName() { return this.name; }
 

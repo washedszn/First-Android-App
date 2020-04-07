@@ -3,15 +3,12 @@ package com.example.app;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,8 +22,7 @@ import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
 import com.example.app.Model.Review;
 import com.example.app.View.DrawRatingView;
-import com.example.app.View.StarView;
-import com.example.app.View.ManageReviewPopup;
+import com.example.app.View.ManageReviewView;
 
 import java.util.Locale;
 
@@ -36,22 +32,19 @@ public class ReviewActivity extends AppCompatActivity {
     private Review review;
     private PopupWindow popupWindow;
     private ConstraintLayout constraintLayout;
-    private DrawRatingView drawRatingView;
-    private ManageReviewPopup manageReviewPopup;
+    private ManageReviewView manageReviewView;
     private int gamePosition, reviewPosition;
-
-    private TextView reviewTitle, reviewVersion, reviewName, reviewMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-        reviewTitle = findViewById(R.id.reviewTitle);
-        reviewVersion = findViewById(R.id.reviewVersion);
-        reviewName = findViewById(R.id.reviewName);
-        reviewMessage = findViewById(R.id.reviewMessage);
-        drawRatingView = findViewById(R.id.drawRating);
+        TextView reviewTitle = findViewById(R.id.reviewTitle);
+        TextView reviewVersion = findViewById(R.id.reviewVersion);
+        TextView reviewName = findViewById(R.id.reviewName);
+        TextView reviewMessage = findViewById(R.id.reviewMessage);
+        DrawRatingView drawRatingView = findViewById(R.id.drawRating);
 
         Button editBtn = findViewById(R.id.editBtn);
 
@@ -82,16 +75,16 @@ public class ReviewActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Game editTemp = GameAdmin.getGame(gamePosition);
                         Review editReview = editTemp.getReview(reviewPosition);
-                        manageReviewPopup = new ManageReviewPopup(ReviewActivity.this, "EDIT", game, editReview);
+                        manageReviewView = new ManageReviewView(ReviewActivity.this, "EDIT", game, editReview);
 
-                        popupWindow = new PopupWindow(manageReviewPopup.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        popupWindow = new PopupWindow(manageReviewView.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-                        manageReviewPopup.setPopupWindow(popupWindow);
+                        manageReviewView.setPopupWindow(popupWindow);
                         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
                         popupWindow.setFocusable(true);
                         popupWindow.update();
 
-                        View customView = manageReviewPopup.getView();
+                        View customView = manageReviewView.getView();
 
                         Button submit = customView.findViewById(R.id.submit);
                         Button cancel = customView.findViewById(R.id.cancel);
@@ -99,7 +92,7 @@ public class ReviewActivity extends AppCompatActivity {
                         submit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                manageReviewPopup.submitHandler();
+                                manageReviewView.submitHandler();
 
                                 Intent refresh = new Intent(ReviewActivity.this, ReviewActivity.class);
                                 refresh.putExtra("game", gamePosition);

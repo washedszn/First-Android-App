@@ -18,7 +18,7 @@ public class ReviewArrayAdapter extends ArrayAdapter {
     private List<Review> reviewList;
 
     public ReviewArrayAdapter(Context context, List objects) {
-        super (context, R.layout.review_list_view, objects);
+        super(context, R.layout.review_list_view, objects);
         layoutInflater = LayoutInflater.from(context);
         reviewList = objects;
     }
@@ -38,10 +38,12 @@ public class ReviewArrayAdapter extends ArrayAdapter {
 
         Review review = reviewList.get(position);
 
+        String rating = review.getRating() + " star rating";
+
         titleView.setText(review.getTitle());
         versionView.setText(review.getVersion());
         nameView.setText(review.getName());
-        ratingView.setText(review.getRating() + " star rating");
+        ratingView.setText(rating);
         messageView.setText(review.getMessage());
 
         return convertView;

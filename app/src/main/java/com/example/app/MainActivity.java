@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
@@ -20,15 +20,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.app.Adapter.GameArrayAdapter;
+import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
-import com.example.app.View.ManageGamePopup;
+import com.example.app.View.ManageGameView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private GameArrayAdapter adapter;
     private ConstraintLayout constraintLayout;
+
+    private ManageGameView manageGameView;
+    private PopupWindow popupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +72,13 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    @Override
-    protected void onResume()
-    {
-        // TODO Auto-generated method stub
-        super.onResume();
-        adapter.notifyDataSetChanged();
-    }
+//    @Override
+//    protected void onResume()
+//    {
+//        // TODO Auto-generated method stub
+//        super.onResume();
+//        adapter.notifyDataSetChanged();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,15 +98,35 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case (R.id.menuTitle):
-                ManageGamePopup manageGamePopup = new ManageGamePopup(this, "ADD");
+                manageGameView = new ManageGameView(this, "ADD");
 
-                PopupWindow popupWindow = new PopupWindow(manageGamePopup.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow = new PopupWindow(manageGameView.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-                manageGamePopup.setPopupWindow(popupWindow);
+                manageGameView.setPopupWindow(popupWindow);
                 popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
                 popupWindow.setFocusable(true);
                 popupWindow.update();
 
+                View customView = manageGameView.getView();
+
+                Button submit = customView.findViewById(R.id.submit);
+                Button cancel = customView.findViewById(R.id.cancel);
+
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        manageGameView.submitHandler();
+                        adapter.notifyDataSetChanged();
+                        popupWindow.dismiss();
+                    }
+                });
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
                 break;
             case (R.id.menuLocal):
                 if (GameAdmin.getLocal()) {

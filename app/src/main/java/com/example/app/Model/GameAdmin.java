@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameAdmin {
 
@@ -105,5 +106,5 @@ public class GameAdmin {
 
     public static void setLocal() { local = !local; }
 
-
+    public static void setGames(ArrayList<Game> existingGames) { games = existingGames; }
 }
