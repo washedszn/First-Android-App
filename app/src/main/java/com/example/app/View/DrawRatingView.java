@@ -40,24 +40,26 @@ public class DrawRatingView extends LinearLayout {
 
     public void setRating(int i) {
 
+        String noStar = "#A9A9A9";
+
         switch (i) {
             case 1:
-                star2.setVisibility(StarView.GONE);
-                star3.setVisibility(StarView.GONE);
-                star4.setVisibility(StarView.GONE);
-                star5.setVisibility(StarView.GONE);
+                star2.setColor(noStar);
+                star3.setColor(noStar);
+                star4.setColor(noStar);
+                star5.setColor(noStar);
                 break;
             case 2:
-                star3.setVisibility(StarView.GONE);
-                star4.setVisibility(StarView.GONE);
-                star5.setVisibility(StarView.GONE);
+                star3.setColor(noStar);
+                star4.setColor(noStar);
+                star5.setColor(noStar);
                 break;
             case 3:
-                star4.setVisibility(StarView.GONE);
-                star5.setVisibility(StarView.GONE);
+                star4.setColor(noStar);
+                star5.setColor(noStar);
                 break;
             case 4:
-                star5.setVisibility(StarView.GONE);
+                star5.setColor(noStar);
                 break;
         }
     }

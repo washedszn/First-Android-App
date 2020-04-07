@@ -7,11 +7,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
 public class StarView extends View {
+
+    private String colorString = "#FFB100";
 
     public StarView(Context context) {
         super(context);
@@ -29,7 +30,7 @@ public class StarView extends View {
     protected void onDraw(Canvas canvas) {
 
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.parseColor(colorString));
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
 
@@ -38,7 +39,6 @@ public class StarView extends View {
         float min = Math.min(getWidth(), getHeight());
         float fat = min / 17;
         float half = min / 2;
-        float rad = half - fat;
         mid = mid - half;
 
         paint.setStrokeWidth(fat);
@@ -67,4 +67,6 @@ public class StarView extends View {
 
         super.onDraw(canvas);
     }
+
+    public void setColor(String color) { colorString = color;}
 }
