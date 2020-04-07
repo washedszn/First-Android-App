@@ -79,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.right_menu, menu);
 
+        String currentLocal = GameAdmin.getLocal() ? "nl" : "en";
+
+        menu.findItem(R.id.menuLocal).setTitle(currentLocal);
         menu.findItem(R.id.menuTitle).setTitle("Add Game");
 
         return true;
@@ -100,13 +103,14 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case (R.id.menuLocal):
-                String local = Locale.getDefault().getDisplayLanguage();
-                Log.e("test", local);
-                if (local.equals("English")) {
+                if (GameAdmin.getLocal()) {
                     setLocale("nl");
+                    item.setTitle("en");
                 } else {
                     setLocale("en");
+                    item.setTitle("nl");
                 }
+                GameAdmin.setLocal();
                 break;
         }
 

@@ -184,6 +184,9 @@ public class GameActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.right_menu, menu);
 
+        String currentLocal = GameAdmin.getLocal() ? "nl" : "en";
+
+        menu.findItem(R.id.menuLocal).setTitle(currentLocal);
         menu.findItem(R.id.menuTitle).setTitle("Edit Game");
 
         return true;
@@ -205,12 +208,12 @@ public class GameActivity extends AppCompatActivity {
 
                 break;
             case (R.id.menuLocal):
-                String local = Locale.getDefault().getLanguage();
-                if (local.equals("en")) {
+                if (GameAdmin.getLocal()) {
                     setLocale("nl");
                 } else {
                     setLocale("en");
                 }
+                GameAdmin.setLocal();
                 break;
         }
 
@@ -241,6 +244,7 @@ public class GameActivity extends AppCompatActivity {
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
         Intent refresh = new Intent(this, GameActivity.class);
+        refresh.putExtra("game", gamePosition);
         finish();
         startActivity(refresh);
     }

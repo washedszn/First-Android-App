@@ -13,8 +13,10 @@ import java.util.ArrayList;
 public class GameAdmin {
 
     private static ArrayList<Game> games;
+    private static boolean local;
 
     static {
+        local = true;
         games = new ArrayList<>();
     }
 
@@ -98,4 +100,10 @@ public class GameAdmin {
     public static ArrayList<Game> getGames() { return games; }
 
     public static Game getGame(int position) { return games.get(position); }
+
+    public static boolean getLocal() { return local; }
+
+    public static void setLocal() { local = !local; }
+
+
 }
