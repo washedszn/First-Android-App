@@ -20,12 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.app.Adapter.GameArrayAdapter;
-import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
 import com.example.app.View.ManageGameView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
         ListView gameListView = findViewById(R.id.ListView);
         constraintLayout = findViewById(R.id.main_activity);
 
-        GameAdmin.initGames(this);
+        if (!GameAdmin.isInitialised()) {
+            GameAdmin.initGames(this);
+        }
 
         adapter = new GameArrayAdapter(this, GameAdmin.getGames());
 
@@ -72,13 +71,15 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-//    @Override
-//    protected void onResume()
-//    {
-//        // TODO Auto-generated method stub
-//        super.onResume();
-//        adapter.notifyDataSetChanged();
-//    }
+    @Override
+    protected void onRestart()
+    {
+        // TODO Auto-generated method stub
+        super.onRestart();
+        Intent refresh = new Intent(this, MainActivity.class);
+        finish();
+        startActivity(refresh);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

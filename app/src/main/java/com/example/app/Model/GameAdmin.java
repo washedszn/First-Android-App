@@ -15,9 +15,11 @@ public class GameAdmin {
 
     private static ArrayList<Game> games;
     private static boolean local;
+    private static boolean isInitialised;
 
     static {
         local = true;
+        isInitialised = false;
         games = new ArrayList<>();
     }
 
@@ -84,6 +86,7 @@ public class GameAdmin {
 
                 games.add(new Game(name, version, genres, reviews, ratings, imageUrl));
             }
+            isInitialised = true;
         } catch(JSONException | IOException e) {
             e.printStackTrace();
         }
@@ -106,5 +109,5 @@ public class GameAdmin {
 
     public static void setLocal() { local = !local; }
 
-    public static void setGames(ArrayList<Game> existingGames) { games = existingGames; }
+    public static boolean isInitialised() { return isInitialised; }
 }
