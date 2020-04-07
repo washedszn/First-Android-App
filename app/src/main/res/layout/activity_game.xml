@@ -69,6 +69,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
+                android:gravity="center"
                 android:textColor="#bfbfbf"
                 android:text="@string/ratings_amp_reviews"
                 android:textSize="24sp"/>

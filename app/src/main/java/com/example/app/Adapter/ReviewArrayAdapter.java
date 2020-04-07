@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.app.Model.Review;
+import com.example.app.R;
 
 import java.util.List;
 

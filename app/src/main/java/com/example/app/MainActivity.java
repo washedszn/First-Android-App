@@ -3,7 +3,6 @@ package com.example.app;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -20,6 +19,7 @@ import android.widget.PopupWindow;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.app.Adapter.GameArrayAdapter;
 import com.example.app.Model.GameAdmin;
 import com.example.app.View.ManageGamePopup;
 

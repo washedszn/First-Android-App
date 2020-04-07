@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.app.Model.Game;
+import com.example.app.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

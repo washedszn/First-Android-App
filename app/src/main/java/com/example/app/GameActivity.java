@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,6 +24,7 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.app.Adapter.ReviewArrayAdapter;
 import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
 import com.example.app.View.ManageGamePopup;
