@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app.Adapter.ReviewArrayAdapter;
 import com.example.app.Model.Game;
@@ -119,6 +120,7 @@ public class GameActivity extends AppCompatActivity {
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         game.deleteReview(position);
                         adapter.notifyDataSetChanged();
+                        Toast.makeText(GameActivity.this, "Deleted Review!", Toast.LENGTH_SHORT).show();
                         return true;
                     }
                 }
@@ -148,6 +150,7 @@ public class GameActivity extends AppCompatActivity {
                                 game.addRating(newRating);
                                 onResume();
                                 popupWindow.dismiss();
+                                Toast.makeText(GameActivity.this, "Added " + newRating + " star rating!", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -169,7 +172,6 @@ public class GameActivity extends AppCompatActivity {
 
                         popupWindow = new PopupWindow(manageReviewView.getView(), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-                        manageReviewView.setPopupWindow(popupWindow);
                         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
                         popupWindow.setFocusable(true);
                         popupWindow.update();
@@ -244,7 +246,6 @@ public class GameActivity extends AppCompatActivity {
 
                 popupWindow = new PopupWindow(manageGameView.getView(), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-                manageGameView.setPopupWindow(popupWindow);
                 popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
                 popupWindow.setFocusable(true);
                 popupWindow.update();

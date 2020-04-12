@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         GameAdmin.deleteGame(position);
                         adapter.notifyDataSetChanged();
+                        Toast.makeText(MainActivity.this, "Deleted Game!", Toast.LENGTH_SHORT).show();
                         return true;
                     }
                 }
@@ -103,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
                 popupWindow = new PopupWindow(manageGameView.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-                manageGameView.setPopupWindow(popupWindow);
                 popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
                 popupWindow.setFocusable(true);
                 popupWindow.update();

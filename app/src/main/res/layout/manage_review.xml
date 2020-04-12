@@ -36,9 +36,8 @@
             android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="#000000"
-            android:hint="@string/message"
-            android:inputType="textImeMultiLine" />
+            android:maxLines="4"
+            android:hint="@string/message" />
 
     </LinearLayout>
 

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app.Model.Game;
 import com.example.app.Model.GameAdmin;
@@ -20,13 +21,14 @@ public class ManageReviewView extends LinearLayout {
     private String type;
     private Game game;
     private Review review;
-    private PopupWindow popupWindow;
     private View customView;
+    private Context context;
 
     public ManageReviewView(Context context, String type, Game game) {
         super(context);
         this.type = type;
         this.game = game;
+        this.context = context;
         init();
     }
 
@@ -35,6 +37,7 @@ public class ManageReviewView extends LinearLayout {
         this.type = type;
         this.game = game;
         this.review = review;
+        this.context = context;
         init();
     }
 
@@ -63,19 +66,22 @@ public class ManageReviewView extends LinearLayout {
         String message = messageView.getText().toString();
         int rating = Integer.parseInt(ratingView.getText().toString());
 
+        rating = rating > 5 ? 5 : rating;
+        rating = rating < 1 ? 1 : rating;
+
         switch (this.type) {
             case "ADD":
                 Review newReview = new Review(rating, name, message, game.getVersion(), title);
                 game.addReview(newReview);
+                Toast.makeText(context, "Added new Review!", Toast.LENGTH_SHORT).show();
                 break;
             case "EDIT":
                 Review editedReview = new Review(rating, name, message, game.getVersion(), title);
                 game.editReview(editedReview, review);
+                Toast.makeText(context, "Edited Review!", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
-
-    public void setPopupWindow(PopupWindow p) { this.popupWindow = p; }
 
     public View getView() { return customView; }
 }

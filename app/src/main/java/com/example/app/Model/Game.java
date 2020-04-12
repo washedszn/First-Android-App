@@ -23,10 +23,6 @@ public class Game implements Serializable {
         this.ratings = ratings;
     }
 
-    public String getImageUrl() {
-        return this.imageUrl.equals("") ? "https://www.brownbagmarketing.com/wp-content/uploads/2013/08/IOS7-Icon-Grid-System.png" : this.imageUrl;
-    }
-
     public String getName() { return this.name; }
 
     public String getVersion() { return this.version; }
@@ -40,6 +36,10 @@ public class Game implements Serializable {
     public List<Integer> getRatings() { return this.ratings; }
 
     public List<Review> getReviews() { return this.reviews; }
+
+    public String getImageUrl() {
+        return this.imageUrl.equals("") ? "https://www.brownbagmarketing.com/wp-content/uploads/2013/08/IOS7-Icon-Grid-System.png" : this.imageUrl;
+    }
 
     public double getAverageRating() {
         double sum = 0;
@@ -58,6 +58,16 @@ public class Game implements Serializable {
         double total = getTotalRatings();
         
         return (int) Math.ceil((test/total)*100);
+    }
+
+    private Integer getTotalRatings() {
+        int sum = 0;
+
+        for (int i = 0; i < this.ratings.size(); i++) {
+            sum += this.ratings.get(i);
+        }
+
+        return sum;
     }
 
     public void setName(String name) { this.name = name; }
@@ -86,16 +96,6 @@ public class Game implements Serializable {
             this.ratings.set(old - 1, this.ratings.get(old - 1) - 1);
             this.ratings.set(edit - 1, this.ratings.get(edit - 1) + 1);
         }
-    }
-
-    private Integer getTotalRatings() {
-        int sum = 0;
-
-        for (int i = 0; i < this.ratings.size(); i++) {
-            sum += this.ratings.get(i);
-        }
-
-        return sum;
     }
 
     public void addRating(Integer rating) {

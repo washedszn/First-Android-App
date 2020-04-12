@@ -2,6 +2,7 @@ package com.example.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.app.Model.Game;
@@ -31,7 +33,7 @@ public class ReviewActivity extends AppCompatActivity {
     private Game game;
     private Review review;
     private PopupWindow popupWindow;
-    private ConstraintLayout constraintLayout;
+    private NestedScrollView scrollView;
     private ManageReviewView manageReviewView;
     private int gamePosition, reviewPosition;
 
@@ -67,7 +69,7 @@ public class ReviewActivity extends AppCompatActivity {
         reviewName.setText(name);
         reviewMessage.setText(message);
 
-        constraintLayout = findViewById(R.id.reviewActivity);
+        scrollView = findViewById(R.id.reviewActivity);
 
         editBtn.setOnClickListener(
                 new View.OnClickListener() {
@@ -79,8 +81,7 @@ public class ReviewActivity extends AppCompatActivity {
 
                         popupWindow = new PopupWindow(manageReviewView.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-                        manageReviewView.setPopupWindow(popupWindow);
-                        popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0);
+                        popupWindow.showAtLocation(scrollView, Gravity.CENTER, 0, 0);
                         popupWindow.setFocusable(true);
                         popupWindow.update();
 
@@ -112,28 +113,6 @@ public class ReviewActivity extends AppCompatActivity {
                     }
                 }
         );
-    }
-
-    public void updateReviewViews() {
-
-        TextView titleView2 = findViewById(R.id.reviewTitle);
-        TextView versionView2 = findViewById(R.id.reviewVersion);
-        TextView nameView2 = findViewById(R.id.reviewName);
-        TextView messageView2 = findViewById(R.id.reviewMessage);
-        DrawRatingView ratingView2 = findViewById(R.id.drawRating);
-
-        String title = getString(R.string.title) + ": " + review.getTitle();
-        String version = getString(R.string.version) + ": " + review.getVersion();
-        String name = getString(R.string.name) + ": " + review.getName();
-        String message = getString(R.string.message) + ": " + review.getMessage();
-
-        titleView2.setText(title);
-        versionView2.setText(version);
-        nameView2.setText(name);
-        messageView2.setText(message);
-
-        ratingView2.setRating(review.getRating());
-
     }
 
     @Override
